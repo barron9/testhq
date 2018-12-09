@@ -13,19 +13,19 @@ const bookschema = new mschema({
   genre:String,
   authorid:String
 })
-const Book = mongoose.model('Book',bookschema)
+const Book = mongoose.model('Book',bookschema) // module.exports ...
 const authorschema = new mschema({
   name:String,
   age:Number,
 })
-const Author = mongoose.model('Author',authorschema)
+const Author = mongoose.model('Author',authorschema)// module.exports ...
 //const schema = require('./schema/schema');
 //const MyGraphQLSchema = new GraphQLSchema({query: GraphQLRoot});
 
 const graphql = require('graphql')
 const _ = require('lodash')
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLInt, GraphQLID , GraphQLList} = graphql
-
+/*
 var Chance = require('chance');
 var chance = new Chance();
 
@@ -39,6 +39,7 @@ for (var i = 0; i < 10; i++) {
   authors = _.concat(authors, { name: chance.first() + ' ' 
   + chance.last(), age: chance.age(), id: i.toString() });
 }
+*/
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
