@@ -121,7 +121,7 @@ const Mutation = new GraphQLObjectType({
           name:args.name,
           age:args.age
         })
-        author.save()
+        return author.save()
         
       }
     }
@@ -180,5 +180,13 @@ app.listen(4000);
   }
   
 }
+///////
+mutation request
 
+mutation{
+  
+  addAuthor(name:"a",age:22) {
+    id
+  }
+}
 */
