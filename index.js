@@ -1,7 +1,25 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-//const schema = require('./schema/schema');
+const mongoose = require('mongoose');
 const app = express();
+
+//mongoose 
+
+mongoose.connect('mongodb://test:000000a@ds127704.mlab.com:27704/hatarapor',{ useNewUrlParser: true })
+mongoose.connection.once('open',()=>console.log('vt baglandi'))
+const mschema = mongoose.Schema
+const bookschema = new mschema({
+  name:String,
+  genre:String,
+  authorid:String
+})
+const Book = mongoose.model('Book',bookschema)
+const authorschema = new mschema({
+  name:String,
+  age:Number,
+})
+const Author = mongoose.model('Author',authorschema)
+//const schema = require('./schema/schema');
 //const MyGraphQLSchema = new GraphQLSchema({query: GraphQLRoot});
 
 const graphql = require('graphql')
@@ -31,7 +49,7 @@ const BookType = new GraphQLObjectType({
     author:{
       type:AuthorType,
       resolve(parent,args){
-        return _.find(authors,{id:parent.authorid})
+        //return _.find(authors,{id:parent.authorid})
         
       }
       
@@ -48,7 +66,7 @@ const AuthorType = new GraphQLObjectType({
     books: {
       type: new GraphQLList(BookType),
       resolve(parent,args){
-        return _.filter(books,{authorid:parent.id})
+        //return _.filter(books,{authorid:parent.id})
         
       }
       
@@ -64,7 +82,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         ///code to get data from db
-        return _.find(books, { id: args.id })
+        //return _.find(books, { id: args.id })
         
       }
     },
@@ -73,14 +91,14 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         ///code to get data from db
-        return _.find(authors, { id: args.id })
+        //return _.find(authors, { id: args.id })
         
       }
     },
     books:{
       type: new GraphQLList(BookType),
       resolve(parent,args){
-        return _.filter(books)
+        //return _.filter(books)
         
       }
       
@@ -89,8 +107,33 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
+const Mutation = new GraphQLObjectType({
+  name:'Mutation',
+  fields:{
+    addAuthor:{
+      type:AuthorType,
+      args:{
+        name:{type:GraphQLString},
+        age:{type:GraphQLInt}
+      },
+      resolve (parent,args){
+        let author = new Author({
+          name:args.name,
+          age:args.age
+        })
+        author.save()
+        
+      }
+    }
+    
+  }
+  
+  
+  
+})
 const schema = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation:Mutation
 })
 
 app.use('/graphql', graphqlHTTP({
