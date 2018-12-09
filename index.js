@@ -77,6 +77,15 @@ const RootQuery = new GraphQLObjectType({
         
       }
     },
+    books:{
+      type: new GraphQLList(BookType),
+      resolve(parent,args){
+        return _.filter(books)
+        
+      }
+      
+      
+    }
   }
 })
 
@@ -103,7 +112,7 @@ app.listen(4000);
     }
     
   },
-   book(id: 5) {
+  book(id: 5) {
     name
     genre
     id
@@ -115,7 +124,18 @@ app.listen(4000);
     
     
   },
- 
+  books {
+    id
+    name
+    genre
+    author {
+      id
+      name
+      age
+    }
+    
+  }
+  
 }
 
 */
