@@ -40,10 +40,9 @@ success()
 
   <List
   size="small"
-
-  bordered={false}
+  bordered={true}
   dataSource={data.books}
-  renderItem={item => (<List.Item>{item.name}</List.Item>)}
+  renderItem={item => (<List.Item >{item.name}</List.Item>)}
 />
 
  )
@@ -55,9 +54,8 @@ success()
     console.log(this.props)
     return (
       <div>
-      <ul id="book-list">
       {this.display()}
-      </ul>
+      
       
       </div>
       );

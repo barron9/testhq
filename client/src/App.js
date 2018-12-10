@@ -30,11 +30,13 @@ class App extends Component {
     var a 
     return (
       <ApolloProvider client={client}>
-      <div className="App">
-      <Row horizontal='center' vertical='center' style={{marginTop:10}}> 
+
+
+      <div className="App" >
+      <Row horizontal='center' vertical='center' style={{paddingTop:10,background:'yellow',borderRadius:10,marginBottom:5}}> 
       
       
-      <h1>PromoClub Mobil Uygulaması Hata Ayıklama</h1>
+      <h3>PromoClub Mobil Uygulaması Hata Ayıklama</h3>
       </Row>
       {false&&
       <Steps size="small" current={this.state.initial}>
@@ -44,7 +46,7 @@ class App extends Component {
       </Steps>}
       {this.state.initial==0&&
         <Column>
-        <Row horizontal='center' vertical='center' style={{marginTop:10}}> 
+        <Row horizontal='center' vertical='center' style={{padding:10,background:'#eee',borderRadius:10,marginBottom:5 }}> 
         
         <Input placeholder="Hata veya aksaklık giriniz..." size={"large"} style={{margin:10}} value={this.state.hata} onChange={
          (e) => {
