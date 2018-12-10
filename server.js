@@ -2,6 +2,7 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const mongoose = require('mongoose');
 const app = express();
+const cors= require('cors')
 
 //mongoose 
 
@@ -24,7 +25,7 @@ const Author = mongoose.model('Author',authorschema)// module.exports ...
 
 const graphql = require('graphql')
 const _ = require('lodash')
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLInt, GraphQLID , GraphQLList} = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLInt, GraphQLID , GraphQLList,GraphQLNonNull} = graphql
 /*
 var Chance = require('chance');
 var chance = new Chance();
@@ -119,8 +120,8 @@ const Mutation = new GraphQLObjectType({
     addAuthor:{
       type:AuthorType,
       args:{
-        name:{type:GraphQLString},
-        age:{type:GraphQLInt}
+        name:{type:new GraphQLNonNull(GraphQLString)},
+        age:{type:new GraphQLNonNull(GraphQLInt)}
       },
       resolve (parent,args){
         let author = new Author({
@@ -134,9 +135,9 @@ const Mutation = new GraphQLObjectType({
     addBook:{
       type:BookType,
       args:{
-        name:{type:GraphQLString},
-        genre:{type:GraphQLString},
-        authorid:{type:GraphQLID}
+        name:{type:new GraphQLNonNull(GraphQLString)},
+        genre:{type:new GraphQLNonNull(GraphQLString)},
+        authorid:{type:new GraphQLNonNull(GraphQLID)}
       },
       resolve(parent,args){
         let book = new Book({
@@ -158,7 +159,7 @@ const schema = new GraphQLSchema({
   query: RootQuery,
   mutation:Mutation
 })
-
+app.use(cors())
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   graphiql: true
