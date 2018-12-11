@@ -33,10 +33,10 @@ class App extends Component {
 
 
       <div className="App" >
-      <Row horizontal='center' vertical='center' style={{paddingTop:10,background:'yellow',borderRadius:10,marginBottom:5}}> 
+      <Row horizontal='center' vertical='center' style={{paddingTop:10,marginTop:10,background:'#eee',borderRadius:10,marginBottom:5}}> 
       
       
-      <h3>PromoClub Mobil Uygulaması Hata Ayıklama</h3>
+      <h3 style={{color:'#ccc'}}>PromoClub Mobil Uygulaması Hata Ayıklama</h3>
       </Row>
       {false&&
       <Steps size="small" current={this.state.initial}>
@@ -56,7 +56,7 @@ class App extends Component {
           />
         <Button type="primary" shape="circle" icon="check" disabled={this.state.disable} onClick={()=>
           {if(this.state.hata=='undefined' ||typeof this.state.hata == undefined || this.state.hata=='' || !this.state.hata){
-            const hide = message.loading('lütfen açıklama belirtiniz!', 100);
+            const hide = message.error('lütfen açıklama belirtiniz!', 100);
             // Dismiss manually and asynchronously
             setTimeout(hide, 2500);
             
@@ -64,7 +64,7 @@ class App extends Component {
             this.setState({disable:true})
             client.mutate({
               mutation: gql`mutation{
-                addBook(name:"${this.state.hata}",genre:"a",authorid:"a"){
+                addBook(name:"${this.state.hata}",genre:"uncompleted",authorid:"a"){
                   name
                 }
               }`,
@@ -90,7 +90,7 @@ class App extends Component {
         } />
         </Row>
         <Booklist/>  
-        
+
         </Column>
       }
       {this.state.initial==1&&

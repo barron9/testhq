@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {gql} from 'apollo-boost';
 import {graphql} from 'react-apollo';
-import { message ,List} from 'antd';
+import { message ,List,Icon} from 'antd';
 
 const getBooksQuery = gql`
 {
@@ -42,7 +42,9 @@ success()
   size="small"
   bordered={true}
   dataSource={data.books}
-  renderItem={item => (<List.Item >{item.name}</List.Item>)}
+  renderItem={item => (<List.Item>
+ <Icon type="check-circle" style={{marginRight:5,fontSize:20,color:item.genre==='completed'?'green':'#ddd'}} theme={'outlined'} />
+  {item.name} </List.Item>)}
 />
 
  )

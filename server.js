@@ -148,6 +148,41 @@ const Mutation = new GraphQLObjectType({
         return book.save()
       }
 
+    },
+    completeBook:{
+      type: BookType,
+      args: { id: { type: GraphQLID } ,
+      genre:{type:new GraphQLNonNull(GraphQLString)}
+    },
+      resolve(parent,args){
+      Book.findOneAndUpdate( {_id:mongoose.Types.ObjectId(args.id)}, { $set:{genre:"completed"} }, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+    return doc
+    });
+
+      }
+
+
+    },
+    uncompleteBook:{
+      type: BookType,
+      args: { id: { type: GraphQLID } ,
+      genre:{type:new GraphQLNonNull(GraphQLString)}
+    },
+      resolve(parent,args){
+      Book.findOneAndUpdate({_id:mongoose.Types.ObjectId(args.id)}, {$set:{genre:"uncompleted"}}, {new: true}, (err, doc) => {
+
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+    return doc
+    });
+
+      }
+
+
     }
     
   }
