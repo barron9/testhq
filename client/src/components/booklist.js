@@ -50,7 +50,7 @@ succ=null
     if(item.genre==='uncompleted'){
     this.props.client.mutate({
       mutation: gql`mutation{
-        completeBook(_id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"completed",authorid:"a"){
+        completeBook(id:"${item.id}",genre:"completed",authorid:"a"){
           name
         }
       }`,
@@ -60,7 +60,7 @@ succ=null
   else{
     this.props.client.mutate({
       mutation: gql`mutation{
-        uncompleteBook(_id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"uncompleted",authorid:"a"){
+        uncompleteBook(id:"${item.id}",genre:"uncompleted",authorid:"a"){
           name
         }
       }`,
