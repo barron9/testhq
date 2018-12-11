@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './index.css'
 import { Column, Row } from 'simple-flexbox';
 import { message, Button,Steps,Layout,Input,Progress } from 'antd';
+const mongoose = require('mongoose');
 
 //components 
 import Booklist from './components/booklist'
@@ -89,7 +90,7 @@ class App extends Component {
           
         } />
         </Row>
-        <Booklist/>  
+        <Booklist client={client} mongoose={mongoose}/>  
 
         </Column>
       }

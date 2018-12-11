@@ -42,7 +42,30 @@ success()
   size="small"
   bordered={true}
   dataSource={data.books}
-  renderItem={item => (<List.Item>
+  renderItem={item => (<List.Item onClick={()=>{
+    if(item.genre==='uncompleted'){
+    this.props.client.mutate({
+      mutation: gql`mutation{
+        completeBook(_id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"completed",authorid:"a"){
+          name
+        }
+      }`,
+      
+    });
+  }
+  else{
+    this.props.client.mutate({
+      mutation: gql`mutation{
+        uncompleteBook(_id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"uncompleted",authorid:"a"){
+          name
+        }
+      }`,
+      
+    });
+
+  }
+
+  }}> 
  <Icon type="check-circle" style={{marginRight:5,fontSize:20,color:item.genre==='completed'?'green':'#ddd'}} theme={'outlined'} />
   {item.name} </List.Item>)}
 />
