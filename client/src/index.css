@@ -1,7 +1,11 @@
 @import '~antd/dist/antd.css';
 
 
+.item{
 
+  text-decoration-line: line-through;
+
+}
 /* #### Mobile Phones Portrait #### */
 @media screen and (max-device-width: 480px) and (orientation: portrait){
   /* some CSS here */

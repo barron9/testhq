@@ -45,7 +45,8 @@ succ=null
   size="small"
   bordered={true}
   dataSource={data.books}
-  renderItem={item => (<List.Item><div onClick={()=>{
+  renderItem={item => (<List.Item><div className={item.genre == 'completed'?"item":null}
+    onClick={()=>{
     if(item.genre==='uncompleted'){
     this.props.client.mutate({
       mutation: gql`mutation{
