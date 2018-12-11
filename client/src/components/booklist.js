@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {gql} from 'apollo-boost';
 import {graphql} from 'react-apollo';
-import { message ,List,Icon} from 'antd';
+import { message ,List,Icon,Button} from 'antd';
 
 const getBooksQuery = gql`
 {
@@ -14,10 +14,12 @@ const getBooksQuery = gql`
   
 }
 `
+let succ = message.loading('yükleniyor..', null);
+
 const success = () => {
-  const hide = message.loading('yükleniyor..', 100);
+  const succ = message.loading('yükleniyor..', null);
   // Dismiss manually and asynchronously
-  setTimeout(hide, 2500);
+  //setTimeout(hide, 2500);
 };
 class booklist extends Component {
 
@@ -25,10 +27,11 @@ class booklist extends Component {
     var data = this.props.data
 if(data.loading){
 //return ()
-success()
+//success()
+succ()
 }else{
 
-
+succ=null
 
   /*
   return data.books.map(book=>{
@@ -42,7 +45,7 @@ success()
   size="small"
   bordered={true}
   dataSource={data.books}
-  renderItem={item => (<List.Item onClick={()=>{
+  renderItem={item => (<List.Item><div onClick={()=>{
     if(item.genre==='uncompleted'){
     this.props.client.mutate({
       mutation: gql`mutation{
@@ -66,8 +69,34 @@ success()
   }
 
   }}> 
- <Icon type="check-circle" style={{marginRight:5,fontSize:20,color:item.genre==='completed'?'green':'#ddd'}} theme={'outlined'} />
-  {item.name} </List.Item>)}
+ <Button  shape="circle"  icon="check" onClick={()=>{
+       //alert(item.id)
+
+    if(item.genre==='uncompleted'){
+    this.props.client.mutate({
+      mutation: gql`mutation{
+        completeBook(id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"completed",authorid:"a"){
+          name
+        }
+      }`,
+      
+    });
+  }
+  else{
+    this.props.client.mutate({
+      mutation: gql`mutation{
+        uncompleteBook(id:"${this.props.mongoose.Types.ObjectId(item.id)}",genre:"uncompleted",authorid:"a"){
+          name
+        }
+      }`,
+      
+    });
+
+  }
+
+  }}
+  style={{marginRight:5,fontSize:20,backgroundColor:item.genre==='completed'?'#89ba16':'white',color:'#ddd'}} theme={'outlined'} />
+  {item.name} </div></List.Item>)}
 />
 
  )

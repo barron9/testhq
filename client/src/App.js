@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './index.css'
 import { Column, Row } from 'simple-flexbox';
 import { message, Button,Steps,Layout,Input,Progress } from 'antd';
-const mongoose = require('mongoose');
 
 //components 
 import Booklist from './components/booklist'
@@ -12,6 +11,8 @@ import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
 import {gql} from 'apollo-boost';
 import {graphql} from 'react-apollo';
+const mongoose = require('mongoose');
+
 const client = new ApolloClient({
   uri:'https://promoclubserver.now.sh/graphql'
 })
